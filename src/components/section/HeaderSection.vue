@@ -13,7 +13,7 @@
             <div class="header__intro"
                 style="backgroundImage:url(https://image.tmdb.org/t/p/w500/dZbLqRjjiiNCpTYzhzL2NMvz4J0.jpg)">
                 <div class="container">
-                    <div class="left">
+                    <div class="left play__icon">
                         <img src="https://image.tmdb.org/t/p/w500/bvwEkotIuHxjuSCEXhhSna0BqQT.jpg" alt="영화포스터">
                     </div>
                     <div class="right">
