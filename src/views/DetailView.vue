@@ -10,76 +10,71 @@
                     </ul>
                 </nav>
             </div>
-            <div class="detail__intro" v-if="movieInfo"
-                :style="{ backgroundImage: `url(https://image.tmdb.org/t/p/w500${movieInfo.backdrop_path})` }">
-                <div class="container">
-                    <div class="left play__icon">
-                        <img :src="'https://image.tmdb.org/t/p/w500/' + movieInfo.poster_path" alt="영화포스터">
-                    </div>
-                    <div class="right">
-                        <h2>{{ movieInfo.title }}</h2>
-                        <p class="desc">
-                            {{ movieInfo.overview }}
-                        </p>
-                        <div class="info">
-                            <p class="date">출시 : {{ movieInfo.release_date }} </p>
-                            <p class="vote">평점 : {{ movieInfo.vote_average }}</p>
-                        </div>
-                        <div class="credits">
-                            <div v-for="charactor in creditInfo.slice(0, 5)" :key="charactor.id">
-                                <img :src="'https://image.tmdb.org/t/p/w500/' + charactor.profile_path" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </header>
+    <main id="main">
+        <DetailIntro v-if="movieBasic" :movie="movieBasic" />
+        <DetailCredits v-if="movieCredits" :movie="movieCredits" />
+        <DetailReview v-if="movieReview" :movie="movieReview" />
+        <!-- <DetailInfo v-if="movieInfo" :movie="movieInfo" /> -->
+    </main>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { useRoute } from 'vue-router';
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import axios from 'axios';
+
+import DetailIntro from "../components/detail/DetailIntro.vue";
+import DetailCredits from "../components/detail/DetailCredits.vue";
+// import DetailInfo from "../components/detail/DetailInfo.vue";
+import DetailReview from "../components/detail/DetailReview.vue";
 
 export default {
+    name: "MovieDetailPage",
+
+    components: {
+        DetailIntro,
+        DetailCredits,
+        DetailReview
+    },
+
     setup() {
-        const movieInfo = ref({});
-        const creditInfo = ref([]);
+        const movieBasic = ref(null);
+        const movieCredits = ref(null);
+        // const movieInfo = ref(null);
+        const movieReview = ref(null);
 
         const route = useRoute();
-        const apiKey = import.meta.env.VITE_API_KEY;
 
-        const movieInfoFetch = (movieId) => {
-            fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=ko-KR`)
-                .then((response) => response.json())
-                .then((res) => {
-                    movieInfo.value = res;
-                    console.log(movieInfo);
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
-
-        const creditInfoFetch = (movieId) => {
-            fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=ko-KR`)
-                .then((response) => response.json())
-                .then((res) => {
-                    creditInfo.value = res.cast;
-                    console.log(creditInfo);
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        }
-
-        onMounted(() => {
+        onMounted(async () => {
             const movieId = route.params.movieId;
-            movieInfoFetch(movieId);
-            creditInfoFetch(movieId);
-        })
+            const apiKey = import.meta.env.VITE_API_KEY;
+            const language = "ko-KR";
 
-        return { movieInfo, creditInfo };
+            try {
+                const resMovieBasic = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?language=${language}&api_key=${apiKey}`)
+                movieBasic.value = resMovieBasic.data;
+                console.log(resMovieBasic.data)
+
+                const resMovieCredits = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?language=${language}&api_key=${apiKey}`)
+                movieCredits.value = resMovieCredits;
+                console.log(movieCredits.value.data.cast)
+
+                // const resMovieInfo = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?language=${language}&api_key=${apiKey}`)
+                // movieInfo.value = resMovieInfo.data;
+                // console.log(resMovieInfo.data)
+
+                const resMovieReview = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=${language}&api_key=${apiKey}&page=1`, options)
+                movieReview.value = resMovieReview.data;
+                console.log(resMovieReview.data)
+
+            } catch (err) {
+                console.log(err);
+            }
+        });
+
+        return { movieBasic, movieCredits, movieReview }
     }
 }
 </script>
