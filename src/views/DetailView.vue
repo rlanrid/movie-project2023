@@ -65,10 +65,9 @@ export default {
                 // movieInfo.value = resMovieInfo.data;
                 // console.log(resMovieInfo.data)
 
-                const resMovieReview = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=${language}&api_key=${apiKey}&page=1`, options)
+                const resMovieReview = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=${language}&api_key=${apiKey}&page=1`)
                 movieReview.value = resMovieReview.data;
                 console.log(resMovieReview.data)
-
             } catch (err) {
                 console.log(err);
             }
