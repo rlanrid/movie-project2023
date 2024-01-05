@@ -12,6 +12,7 @@
         <DetailVideo v-if="movieVideo" :movie="movieVideo" />
         <DetailCredits v-if="movieCredits" :movie="movieCredits" />
     </main>
+    <FooterSection />
 </template>
 
 <script>
@@ -23,6 +24,7 @@ import DetailIntro from "../components/detail/DetailIntro.vue";
 import DetailCredits from "../components/detail/DetailCredits.vue";
 import DetailInfo from "../components/detail/DetailInfo.vue";
 import DetailVideo from "../components/detail/DetailVideo.vue";
+import FooterSection from "../components/section/FooterSection.vue";
 
 export default {
     name: "MovieDetailPage",
@@ -31,7 +33,8 @@ export default {
         DetailIntro,
         DetailCredits,
         DetailInfo,
-        DetailVideo
+        DetailVideo,
+        FooterSection
     },
 
     setup() {
