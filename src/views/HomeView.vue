@@ -28,7 +28,7 @@ const fetchMovies = async (category) => {
   try {
     const response = await axios.get(url, {
       params: {
-        api_key: '39fda1c069a36899bfba2521758ec9c6',
+        api_key: import.meta.env.VITE_API_KEY,
         language: 'ko-KR',
         page: '1'
       }
@@ -45,7 +45,7 @@ const serachMovies = async (e) => {
     e.preventDefault();
     const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
       params: {
-        api_key: '39fda1c069a36899bfba2521758ec9c6',
+        api_key: import.meta.env.VITE_API_KEY,
         language: 'ko-KR',
         query: searchKeyword.value,
         page: '1'

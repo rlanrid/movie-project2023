@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+.env
+env
 
 node_modules
 .DS_Store
@@ -26,3 +28,8 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
