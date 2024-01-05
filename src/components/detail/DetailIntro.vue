@@ -6,31 +6,17 @@
                 <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="영화포스터">
             </div>
             <div class="right">
-                <h2>{{ movie.title }}</h2>
-                <p class="desc">
-                    {{ movie.overview }}
-                </p>
-                <div class="info">
-                    <p class="date">출시 : {{ movie.release_date }}</p>
-                    <p class="vote">평점 : {{ movie.vote_average }}</p>
+                <div>
+                    <h2 class="title">{{ movie.title }}</h2>
                 </div>
-                <!-- <div class="credits">
-                    <div>
-                        <img src="https://image.tmdb.org/t/p/w500/q21uuCtTioIVcGc3a1Q0DpdcNMO.jpg" alt="">
-                    </div>
-                    <div>
-                        <img src="https://image.tmdb.org/t/p/w500/s2Ouz4b7xqDH72aU48TSW5zS40v.jpg" alt="">
-                    </div>
-                    <div>
-                        <img src="https://image.tmdb.org/t/p/w500/a5r4MtoL5jU4DtCp0BtzwEAtfyL.jpg" alt="">
-                    </div>
-                    <div>
-                        <img src="https://image.tmdb.org/t/p/w500/oWkitw5jzILwb775CVGjsqMSrqz.jpg" alt="">
-                    </div>
-                    <div>
-                        <img src="https://image.tmdb.org/t/p/w500/9lEbP0scP8vjNa4hYmAg4UgMQky.jpg" alt="">
-                    </div>
-                </div> -->
+                <p class="tag__line">{{ movie.tagline }}</p>
+                <div class="info">
+                    <p class="date">{{ movie.release_date }}</p>
+                    <p class="vote">{{ movie.vote_average }}</p>
+                </div>
+                <div class="desc">
+                    <p>{{ movie.overview }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -49,36 +35,98 @@ export default {
 
 <style lang="scss">
 .detail__intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     .container {
         display: flex;
-        justify-content: space-between;
-        padding-top: 100px;
+        justify-content: center;
+        align-items: center;
         position: relative;
         z-index: 10;
 
+        @media(max-width: 780px) {
+            margin: 0;
+            flex-direction: column;
+            padding-top: 30px;
+        }
+
         .left {
-            width: 350px;
+            width: 20vw;
+            min-width: 275px;
         }
 
         .right {
-            width: calc(100% - 350px);
+            width: calc(100% - 40vw);
             margin-left: 2%;
-            display: flex;
-            flex-wrap: wrap;
-            // flex-direction: column;
-            // justify-content: space-between;
 
-            h2 {
-                font-size: 26px;
+            @media(max-width: 780px) {
+                margin-top: 5vw;
+                width: 100%;
+            }
+
+            .tag__line {
+                margin-bottom: 2vw;
+            }
+
+            .info {
+                margin-bottom: 2vw;
+                display: flex;
+
+                p {
+                    &:first-child {
+                        position: relative;
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            width: 1px;
+                            height: 22px;
+                            right: -7.5px;
+                            top: 0;
+                            opacity: 0.9;
+                            background-color: var(--white300);
+
+                            @media(max-width:780px) {
+                                height: 17px;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+                        margin-left: 14px;
+                    }
+                }
+            }
+
+            .title {
+                width: 100%;
+                font-size: 3rem;
                 margin-bottom: 10px;
+                line-height: 1;
+                font-weight: 700;
             }
 
             p {
                 font-size: 16px;
+
+                @media(max-width:780px) {
+                    font-size: 14px;
+                }
             }
 
             .desc {
-                margin-bottom: 10px;
+                @mixin line($line) {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: $line;
+                    -webkit-box-orient: vertical;
+                }
+
+                margin-bottom: 2vw;
+                @include line(5);
             }
 
             .credits {
@@ -86,15 +134,19 @@ export default {
                 align-items: center;
 
                 div {
-                    width: 150px;
+                    width: 6vw;
                     margin-right: 15px;
+
+                    @media(max-width:780px) {
+                        width: 19%;
+                    }
                 }
             }
         }
     }
 
     width: 100%;
-    height: 700px;
+    height: 90vh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

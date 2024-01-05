@@ -45,9 +45,10 @@ const serachMovies = async (e) => {
     e.preventDefault();
     const response = await axios.get('https://api.themoviedb.org/3/search/movie', {
       params: {
-        api_key: 'https://api.themoviedb.org/3/movie/{movie_id}/images',
+        api_key: '39fda1c069a36899bfba2521758ec9c6',
         language: 'ko-KR',
-        query: searchKeyword.value
+        query: searchKeyword.value,
+        page: '1'
       }
     });
     movies.value = response.data.results;
@@ -109,7 +110,9 @@ onMounted(async () => {
   position: relative;
 
   input {
+    background-color: var(--black);
     border: 1px solid var(--black600);
+    color: var(--white);
     padding: 1rem 2rem;
     width: 100%;
     border-radius: 50px;
@@ -135,17 +138,28 @@ onMounted(async () => {
 
     li {
       a {
-        border: 1px solid var(--black);
+        border: 1px solid var(--white);
         padding: 0.5rem 1.3rem;
         display: inline-block;
         border-radius: 50px;
         margin-bottom: 20px;
         margin-right: 10px;
         margin-top: 20px;
+        transition: all 0.3s;
 
         &:hover {
-          background-color: var(--black);
-          color: var(--white);
+          background-color: var(--white);
+          color: var(--black);
+        }
+      }
+    }
+
+    @media(max-width:780px) {
+      justify-content: center;
+
+      li {
+        a {
+          border: none;
         }
       }
     }
@@ -161,6 +175,10 @@ onMounted(async () => {
     width: 24%;
     margin-bottom: 1.5%;
     background-color: #ccc;
+
+    @media(max-width:780px) {
+      width: 49%;
+    }
   }
 }
 </style>

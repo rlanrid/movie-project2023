@@ -4,10 +4,18 @@ body {
 }
 
 .container {
-    width: 100%;
-    max-width: 1300px;
+    width: 90%;
     margin: 0 auto;
+
+    @media(max-width: 1280px) {
+        width: 80%;
+    }
+
+    @media(max-width:380px) {
+        width: 95%;
+    }
 }
+
 
 // 비디오 마우스 아이콘 효과
 .play__icon {
